@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import { Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { CSSProperties } from "@material-ui/styles";
+import React, { useState } from "react";
 import { CustomTheme } from "../../style/theme";
-import { Button } from "@material-ui/core";
 
-import kanjiSun from "../../assets/kanji/Kanji sun.svg";
 import kanjiBook from "../../assets/kanji/Kanji book.svg";
+import kanjiSun from "../../assets/kanji/Kanji sun.svg";
 
-import kanjiRight from "../../assets/kanji/Kanji-right.svg";
 import kanjiLeft from "../../assets/kanji/Kanji-left.svg";
+import kanjiRight from "../../assets/kanji/Kanji-right.svg";
 
-import { FOOD_ITEMS, FoodItem } from "../../data/food";
 import { FoodTile } from "../../components";
+import { FOOD_ITEMS, FoodItem } from "../../data/food";
 
 import { sendData } from "../../utils/send-data";
 
@@ -78,9 +78,20 @@ export const CalculatorPage: React.FC<Props> = (props: Props) => {
             </div>
           </div>
           <div className={classes.buttonContainer}>
-            <Button variant="contained" onClick={sendData(result)}>
-              {result} Kcal
-            </Button>
+            <div style={{ display: "flex", gap: 12 }}>
+              <Button
+                variant="contained"
+                onClick={() => sendData(result)}
+              >
+                {result} Kcal
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={() => setValues({})}
+              >
+                Reset
+              </Button>
+            </div>
           </div>
         </div>
         <div className={classes.lateralBar}>
