@@ -26,7 +26,31 @@ jobs:
       - run: npm run test
       - run: npm run build
 
+  style-check:
+    docker:
+      - image: circleci/node:14
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+
+      - run: npm install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      # code style check using Prettier (uses npx so no repo dev-deps needed)
+      - run: npx prettier --check "src/**/*.{js,ts,tsx,css,json,md}" || (echo "Code style issues found. Run 'npx prettier --write' locally to fix." && exit 1)
+
 workflows:
   node-tests:
     jobs:
+      - style-check
       - build-test
